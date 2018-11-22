@@ -27,8 +27,8 @@
 	
 	$(function(){
 		secretSantaApp = {
-			secretSantaNames = [],
-			secretSantaMatches = []
+			secretSantaNames: [];
+			secretSantaMatches: [];
 		};
 
 		$('form').on('submit', function(e){
