@@ -8,7 +8,7 @@
 		
 /*-------------------- START OF STYLING---------------------*/
 		body{
-			background-image: url(Assets/three.PNG);
+			background-image: url(../Assets/three.PNG);
 			background-size: inherit;
 			margin-top: 200px;
 			/*background::#ACB6B7;*/
