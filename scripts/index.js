@@ -25,43 +25,87 @@
 	//ask for how many participants, Jquery generate HTML for that many boxes 1 for each name.
 		//  -  look at example in meme-ory game that adds html based on the user interaction
 	
-	$(function(){
-		secretSantaApp = {
-			secretSantaNames: [],
-			secretSantaMatches: [],
-		};
+$(function() {
 
-		$('form').on('submit', function(e){
-			e.preventDefault();
-			console.log("form is submitted")
+    const secretSantaList = [];
+    const secretSantaMatches = [];
+    let numberOfParticipants = 0;
 
+    function getRandoNum() {
+        return Math.floor(Math.random() * (secretSantaMatches.length));
+        //gets random number
+    }
 
-			const numberOfPlayers = $("text").val();
-			console.log("numberOfPlayers");
-			$('input[type=text]').val('');
+    function getRandomPerson() {
+        const randoNum = getRandoNum();
+        const randoPerson = secretSantaMatches[randoNum];
+        return randoPerson;
+        //gets random person to be matched with current person
+	}
 
+    function compare(match, currentPerson) {
+        if (match === currentPerson && secretSantaMatches.length && secretSantaList.length === 0) {
+            console.log("the last user is matched with themselves, start the game again")
+            startGame();
+        } else if (match === currentPerson) {
+            //they got matched with themselves - get a new match
+            const newMatch = getRandomPerson();
+            const checkName = compare(newMatch, currentPerson);
+            return newMatch
+            //still struggling to make this work? occasionally throws an error when only 3 people entered
+        } else {
+            //they are matched with someone else, list the match
+            $('.matchedNames').append(`<li>${currentPerson} is buying a gift for ${match} 🎁🎄🎅</li>`);
+            removeMatchFromArray(match);
 
-			// secretSantaList.addNumberOfParticipants = function(){
-			// 	const numberOfNameSpaces = `<input class="nameSpaces" type="text"placeholder="name of participant" />`;
-   //   			 $('ul.listNames').append(numberOfNameSpaces);
-			// }
+        }
+    }
 
-		});
+    function removeMatchFromArray(match) {
+        const matchPlace = secretSantaMatches.indexOf(match);
+        const removeFromMatches = secretSantaMatches.splice(matchPlace, 1)
+        // Takes a name, finds where that person is in the array, removes that person from the array 
+    }
 
+    $('.numberOfParticipants').on('submit', function(e) {
+        e.preventDefault();
 
+        numberOfParticipants = $(this).find(".text").val();
+        $(".numberOfParticipants").fadeOut(500);
+        $(".namesOfParticipants").fadeIn(1000);
 
-		// secretSantaList.addList = function(){
-		// 	//create spaces for user to input names based on how many participants listed here
-		// 	const numberOfParticipants = 
-		// 	const list = `<li class = text>${numberOfParticipant}</li>`;
-		// 	$('ul.participants').append(list);
-		// }
-	});
+    });
 
-	//💡I need to spend some more time on it to get to the jquery side of things, I wanted it to work in vanilla JS first and it was more challenging then I thought so I didn't get to much of the Jquery side but wanted to submit something.
+    $('.namesOfParticipants').on('submit', function(e) {
+        e.preventDefault();
+
+        const nameOfPlayers = $(this).find(".text").val();
+        $('.text').val('');
+        $(".listNames").append(`<li>${nameOfPlayers}</li>`)
+        $('li').css("text-transform", "uppercase");
+
+        secretSantaList.push(nameOfPlayers);
+        secretSantaMatches.push(nameOfPlayers);
+
+    });
+
+    $('.matchNames').on('submit', function(e) {
+        e.preventDefault();
+        for (let i = 0; i < numberOfParticipants; i++) {
+
+            const currentPerson = secretSantaList.pop();
+            let match = getRandomPerson();
+            const checkName = compare(match, currentPerson);
+
+        }
+        $('li').css("text-transform", "capitalize");
+
+    });
+
+});
 
 	
-
+//💡this is the remainder of my Vanilla code, it took forever and hurt to delete it so I'm saving it
 
 // const startGame = function(){
 
@@ -92,60 +136,5 @@
 
 // 		secretSantaList.push(collection) && secretSantaMatches.push(collection)
 // 	}
-
-
-
-
-
-// 	function getRandoNum() {
-// 		return Math.floor(Math.random() * (secretSantaMatches.length));
-// 		//gets random number
-// 	}
-
-				
-// 	function getRandomPerson(){
-// 		const randoNum = getRandoNum();
-// 		const randoPerson = secretSantaMatches[randoNum];
-// 		return randoPerson;
-// 	//gets random person to be matched with current person
-// 	}
-
-
-
-// 	function removeMatchFromArray(match) {
-// 		const matchPlace = secretSantaMatches.indexOf(match);
-// 		const removeFromMatches = secretSantaMatches.splice(matchPlace,1)				
-// // Takes a name, finds where that person is in the array, removes that person from the array 
-// 	}
-
-// 	function compare(match, currentPerson){
-// 		if(match === currentPerson && secretSantaMatches.length && secretSantaList.length === 0){
-// 				console.log("the last user is matched with themselves, start the game again")
-// 				startGame();		
-// 		}else if (match === currentPerson){
-// 			//they got matched with themselves - get a new match
-// 			const newMatch = getRandomPerson();
-// 			const checkName = compare(newMatch, currentPerson);
-// 			return newMatch
-// 			//still struggling to make this work?
-// 		}else {
-// 			//they are matched with someone else, list the match
-// 			console.log(`${currentPerson} is buying a gift for ${match} 🎁🎄🎅`);
-// 			removeMatchFromArray(match);
-
-// 		}
-// 	}
-
-// 	for (let i = 0; i < howManyParticipants; i++) {
-// 		// console.log('Secret santa list: ', secretSantaList);
-// 		// console.log('Secret santa Matches: ', secretSantaMatches);
-
-// 		const currentPerson = secretSantaList.pop();
-// 		let match = getRandomPerson();
-// 		const checkName = compare(match, currentPerson);
-
-// 		// done!
-// 	}
-// };
 
 // startGame();

@@ -11,15 +11,37 @@
 
 	<section class = "container">
 		<h1>Secret Santa!</h1>
-		<form class = "data">
+		<form class = "numberOfParticipants">
 			<h2 class = "participants" for="participants">How many participants:</h2>
 			<input class = "text" type="text" placeholder="number of Participants">
+			<label for="numberOfPeople">Number Of Participants</label>
 			<input class= "submit" type="submit" placeholder="submit">
 		</form>
-		<ul class = "listNames">
-	<!-- li will be created based on how many people the user says will be participating -->
-		</ul>
+		
+		<form class="namesOfParticipants hidden">
+			<h2 class = "enterNames" for="enterNames">Enter Participant Names</h2>
+			<input class = "text" type="text" placeholder="Enter Participant Names">
+			 <label for="namesOfPeople">Names Of Participants</label>
+			<input class= "submit" type="submit" placeholder="submit">
+		</form>
 
+		<form class="matchNames">
+			<input class="match" type="submit" value="Match Names">
+		</form>
+
+	</section>
+	
+	<section>
+		<div class="listContainer clearfix">
+			<ol class = "listNames">Names Of Participants:
+				<!-- li will be created based on names the user says will be participating -->
+			</ol>
+		
+			<ol class = "matchedNames">Secret Santa Matches:
+				<!-- li will be created based on names the user says will be participating -->
+			</ol>
+
+			</div>
 	</section>
 
 
